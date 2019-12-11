@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
+import 'package:flutter_app/utils/insta_util.dart';
 import 'package:flutter_app/utils/profile_img_path.dart';
+import 'package:flutter_app/widgets/comment.dart';
 
 class FeedPage extends StatelessWidget {
   @override
@@ -56,42 +58,42 @@ class FeedPage extends StatelessWidget {
         _postActions(),
         _postLikes(),
         _postCaption(index, context),
+        _allComments(),
       ],
+    );
+  }
+
+  FlatButton _allComments() {
+    int num = getRng(60);
+
+    return FlatButton(
+      child: Text(
+        'show all $num comments',
+        style: TextStyle(color: Colors.grey[400]),
+      ),
+      onPressed: null,
     );
   }
 
   Padding _postCaption(int index, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: common_gap),
-      child: RichText(
-        text: TextSpan(
-          children: <TextSpan>[
-            TextSpan(
-              text: 'username $index',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            TextSpan(
-              text: ' ',
-            ),
-            TextSpan(
-              text:
-                  'You Can Love What You Do for a Living, But Still Think it Feels Like Work ... normal to love your job and simultaneously recognize the fact that it\'s hard work. ... But, you likely don\'t feel that way because you spent the entire day slacking.........',
-            ),
-          ],
-          style: DefaultTextStyle.of(context).style,
-        ),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: common_gap, vertical: common_s_gap),
+      child: Comment(showProfile: true, username: 'username $index', caption: 'Yeah~ This is my first flutter app project~~~~~~~~~~~~~~~~~~ Let\'s enjoy!', dateTime: DateTime.now())
     );
   }
 
   Row _postLikes() {
+    int num = getRng(99);
+
     return Row(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: common_gap),
-          child:
-              Text('80 likes', style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
+        num == 0
+            ? Text('')
+            : Padding(
+                padding: const EdgeInsets.only(left: common_gap),
+                child: Text('$num likes',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
       ],
     );
   }
