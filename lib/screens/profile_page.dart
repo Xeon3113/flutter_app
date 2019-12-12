@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
+import 'package:flutter_app/utils/profile_img_path.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -62,8 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverList(
-                    delegate: SliverChildListDelegate(_coloredContainer()),
-                  ),
+                      delegate: SliverChildListDelegate([_getProfileHeader])),
                 ],
               ),
             )
@@ -73,6 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  /*
   List<Widget> _coloredContainer() {
     return List<Widget>.generate(
       20,
@@ -82,6 +83,70 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+  */
+
+  Row get _getProfileHeader => Row(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(common_gap),
+            child: CircleAvatar(
+              radius: 40,
+              backgroundImage: NetworkImage(getProfileImgPath("Xeon3113")),
+            ),
+          ),
+          Expanded(
+            child: Table(
+              children: [
+                TableRow(children: [
+                  _getStatusValueWidget('123'),
+                  _getStatusValueWidget('234'),
+                  _getStatusValueWidget('5432'),
+                ]),
+                TableRow(children: [
+                  _getStatusLabesWidget('Posts'),
+                  _getStatusLabesWidget('Followers'),
+                  _getStatusLabesWidget('Following'),
+                ]),
+              ],
+            ),
+          )
+        ],
+      );
+
+  Widget _getStatusValueWidget(String value) => Center(
+    child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: common_s_gap,
+          ),
+          child: FittedBox(fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+  );
+
+  Widget _getStatusLabesWidget(String value) => Center(
+    child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: common_s_gap,
+          ),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ),
+  );
 
   Row _userNameIconButton() {
     return Row(
