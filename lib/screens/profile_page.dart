@@ -39,7 +39,10 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            FlatButton(child: Text('Xeon3113'), onPressed: null,)
+            FlatButton(
+              child: Text('Xeon3113'),
+              onPressed: null,
+            )
           ],
         ),
       ),
@@ -58,12 +61,24 @@ class _ProfilePageState extends State<ProfilePage> {
             Expanded(
               child: CustomScrollView(
                 slivers: <Widget>[
-
+                  SliverList(
+                    delegate: SliverChildListDelegate(_coloredContainer()),
+                  ),
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  List<Widget> _coloredContainer() {
+    return List<Widget>.generate(
+      20,
+      (i) => Container(
+        height: 150,
+        color: Colors.primaries[i % Colors.primaries.length],
       ),
     );
   }
@@ -81,12 +96,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         Spacer(),
         IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              setState(() {
-                _menuOpened = !_menuOpened;
-              });
-            }),
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            setState(() {
+              _menuOpened = !_menuOpened;
+            });
+          },
+        ),
       ],
     );
   }
