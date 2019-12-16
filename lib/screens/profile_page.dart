@@ -9,13 +9,13 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _menuOpened = false;
-  Size _size;
+  Size size;
   double _menuWidth;
 
   @override
   Widget build(BuildContext context) {
-    _size = MediaQuery.of(context).size;
-    _menuWidth = _size.width / 1.5;
+    size = MediaQuery.of(context).size;
+    _menuWidth = size.width / 1.5;
 
     return Scaffold(
       body: Stack(
@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
       color: Colors.grey[200],
       duration: Duration(milliseconds: 250),
       transform: Matrix4.translationValues(
-          _menuOpened ? _size.width - _menuWidth : _size.width, 0, 0),
+          _menuOpened ? size.width - _menuWidth : size.width, 0, 0),
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -63,7 +63,13 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverList(
-                      delegate: SliverChildListDelegate([_getProfileHeader])),
+                      delegate: SliverChildListDelegate([
+                    _getProfileHeader,
+                    _username(),
+                    _userBio(),
+                    _email(),
+                    _editPropfileBtn()
+                  ])),
                 ],
               ),
             )
@@ -73,17 +79,55 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  /*
-  List<Widget> _coloredContainer() {
-    return List<Widget>.generate(
-      20,
-      (i) => Container(
-        height: 150,
-        color: Colors.primaries[i % Colors.primaries.length],
+  Padding _editPropfileBtn() {
+    return Padding(
+      padding: const EdgeInsets.all(common_gap),
+      child: SizedBox(
+        height: 24,
+        child: FlatButton(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6),
+              side: BorderSide(
+                  color: Colors.black87, width: 1, style: BorderStyle.solid),
+            ),
+            onPressed: () {},
+            child: Text('Edit Profile',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ))),
       ),
     );
-  }
-  */
+  } // 프로필 수정 버튼
+
+  Padding _email() {
+    return Padding(
+      padding: const EdgeInsets.only(left: common_gap),
+      child: Text('arangluv@gmail.com',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+          )),
+    );
+  } // email 출력 부분
+
+  Padding _userBio() {
+    return Padding(
+      padding: const EdgeInsets.only(left: common_gap),
+      child: Text('Flutter를 배워봅시다~',
+          style: TextStyle(
+              fontWeight: FontWeight.w300, fontSize: common_xl_fontSize)),
+    );
+  } // 상태값 출력
+
+  Padding _username() {
+    return Padding(
+      padding: const EdgeInsets.only(left: common_gap),
+      child: Text(
+        'Lee Chanhee',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+    );
+  } // 이름 출력
 
   Row get _getProfileHeader => Row(
         children: <Widget>[
@@ -114,11 +158,12 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
   Widget _getStatusValueWidget(String value) => Center(
-    child: Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: common_s_gap,
           ),
-          child: FittedBox(fit: BoxFit.scaleDown,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
             child: Text(
               value,
               textAlign: TextAlign.center,
@@ -128,10 +173,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
-  );
+      );
 
   Widget _getStatusLabesWidget(String value) => Center(
-    child: Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: common_s_gap,
           ),
@@ -146,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
-  );
+      );
 
   Row _userNameIconButton() {
     return Row(

@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 const double common_xxs_gap = 8.0;
 const double common_xs_gap = 10.0;
 const double common_s_gap = 12.0;
@@ -16,3 +18,5 @@ const double common_l_fontSize = 12.0;
 const double common_xl_fontSize = 14.0;
 const double common_xxl_fontSize = 16.0;
 const double common_xxxl_fontSize = 18.0;
+
+Size size;
