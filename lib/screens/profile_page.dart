@@ -11,6 +11,8 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _menuOpened = false;
   Size size;
   double _menuWidth;
+  AlignmentGeometry tabAlign = Alignment.centerLeft;
+  bool _tabIconGridSelected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     _username(),
                     _userBio(),
                     _email(),
-                    _editPropfileBtn()
+                    _editPropfileBtn(),
+                    _getTabIconButtons,
+                    _getAnimatedSelectedBar,
                   ])),
                 ],
               ),
@@ -216,4 +220,47 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
     );
   }
+
+  void _setTab(bool tabLeft) {
+    setState(() {
+      this._tabIconGridSelected = tabLeft;
+      if (tabLeft) {
+        this.tabAlign = Alignment.centerLeft;
+      } else {
+        this.tabAlign = Alignment.centerRight;
+      }
+    });
+  }
+
+  Widget get _getTabIconButtons => Row(
+        children: <Widget>[
+          Expanded(
+            child: IconButton(
+              icon: ImageIcon(AssetImage("assets/grid.png"), color: _tabIconGridSelected?Colors.black:Colors.black26),
+              onPressed: () {
+                _setTab(true);
+              },
+            ),
+          ),
+          Expanded(
+            child: IconButton(
+              icon: ImageIcon(AssetImage("assets/saved.png"), color: _tabIconGridSelected?Colors.black26:Colors.black),
+              onPressed: () {
+                _setTab(false);
+              },
+            ),
+          ),
+        ],
+      );
+
+  Widget get _getAnimatedSelectedBar => AnimatedContainer(
+        alignment: tabAlign,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        color: Colors.transparent,
+        height: 1,
+        width: size.width,
+        child:
+            Container(height: 1, width: size.width / 2, color: Colors.black87),
+      );
 }
