@@ -77,8 +77,12 @@ class FeedPage extends StatelessWidget {
 
   Padding _postCaption(int index, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: common_gap, vertical: common_s_gap),
-      child: Comment(showProfile: true, username: 'username $index', caption: 'Yeah~ This is my first flutter app project~~~~~~~~~~~~~~~~~~ Let\'s enjoy!', dateTime: DateTime.now())
+        padding: const EdgeInsets.symmetric(
+            horizontal: common_gap, vertical: common_s_gap),
+        child: Comment(showProfile: true,
+            username: 'username $index',
+            caption: 'Yeah~ This is my first flutter app project~~~~~~~~~~~~~~~~~~ Let\'s enjoy!',
+            dateTime: DateTime.now())
     );
   }
 
@@ -90,10 +94,10 @@ class FeedPage extends StatelessWidget {
         num == 0
             ? Text('')
             : Padding(
-                padding: const EdgeInsets.only(left: common_gap),
-                child: Text('$num likes',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
+          padding: const EdgeInsets.only(left: common_gap),
+          child: Text('$num likes',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
       ],
     );
   }
@@ -137,7 +141,7 @@ class FeedPage extends StatelessWidget {
           padding: const EdgeInsets.all(common_gap),
           child: CircleAvatar(
             backgroundImage:
-                CachedNetworkImageProvider(getProfileImgPath(username)),
+            CachedNetworkImageProvider(getProfileImgPath(username)),
             radius: common_radius,
           ),
         ),
@@ -156,18 +160,31 @@ class FeedPage extends StatelessWidget {
   CachedNetworkImage _postImage(int index) {
     return CachedNetworkImage(
       imageUrl: 'https://picsum.photos/id/$index/400/400',
-      imageBuilder: (BuildContext context, ImageProvider imageProvider) =>
-          AspectRatio(
-        aspectRatio: 1 / 1,
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
+      placeholder: (context, url) {
+        return Container(
+          width: size.width,
+          height: size.width,
+          child: Center(
+            child: SizedBox(
+              width: 30,
+              height: 30,
+              child: Image.asset('assets/loading_img.gif'),
             ),
           ),
-        ),
-      ),
+        );
+      },
+      imageBuilder: (BuildContext context, ImageProvider imageProvider) =>
+          AspectRatio(
+            aspectRatio: 1 / 1,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
     );
   }
 }

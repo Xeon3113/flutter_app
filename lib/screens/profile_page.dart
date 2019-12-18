@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
 import 'package:flutter_app/utils/profile_img_path.dart';
@@ -7,12 +8,28 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
   bool _menuOpened = false;
-  Size size;
   double _menuWidth;
   AlignmentGeometry tabAlign = Alignment.centerLeft;
   bool _tabIconGridSelected = true;
+  double _gridMargin = 0.0;
+  double _myImgGridMargin = size.width;
+  int _duration = 200;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 300));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
       width: _menuWidth,
       curve: Curves.easeInOut,
       color: Colors.grey[200],
-      duration: Duration(milliseconds: 250),
+      duration: Duration(milliseconds: 300),
       transform: Matrix4.translationValues(
           _menuOpened ? size.width - _menuWidth : size.width, 0, 0),
       child: SafeArea(
@@ -55,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _profile() {
     return AnimatedContainer(
       curve: Curves.easeInOut,
-      duration: Duration(milliseconds: 250),
+      duration: Duration(milliseconds: 300),
       transform: Matrix4.translationValues(_menuOpened ? -_menuWidth : 0, 0, 0),
       child: SafeArea(
         child: Column(
@@ -74,6 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     _getTabIconButtons,
                     _getAnimatedSelectedBar,
                   ])),
+                  _getImageGrid(context),
                 ],
               ),
             )
@@ -210,8 +228,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         Spacer(),
         IconButton(
-          icon: Icon(Icons.menu),
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: _animationController,
+            semanticLabel: 'Show menu',
+          ),
           onPressed: () {
+            _menuOpened ? _animationController.reverse() : _animationController.forward();
             setState(() {
               _menuOpened = !_menuOpened;
             });
@@ -226,8 +249,12 @@ class _ProfilePageState extends State<ProfilePage> {
       this._tabIconGridSelected = tabLeft;
       if (tabLeft) {
         this.tabAlign = Alignment.centerLeft;
+        this._gridMargin = 0;
+        this._myImgGridMargin = size.width;
       } else {
         this.tabAlign = Alignment.centerRight;
+        this._gridMargin = -size.width;
+        this._myImgGridMargin = 0;
       }
     });
   }
@@ -236,7 +263,8 @@ class _ProfilePageState extends State<ProfilePage> {
         children: <Widget>[
           Expanded(
             child: IconButton(
-              icon: ImageIcon(AssetImage("assets/grid.png"), color: _tabIconGridSelected?Colors.black:Colors.black26),
+              icon: ImageIcon(AssetImage("assets/grid.png"),
+                  color: _tabIconGridSelected ? Colors.black : Colors.black26),
               onPressed: () {
                 _setTab(true);
               },
@@ -244,7 +272,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Expanded(
             child: IconButton(
-              icon: ImageIcon(AssetImage("assets/saved.png"), color: _tabIconGridSelected?Colors.black26:Colors.black),
+              icon: ImageIcon(AssetImage("assets/saved.png"),
+                  color: _tabIconGridSelected ? Colors.black26 : Colors.black),
               onPressed: () {
                 _setTab(false);
               },
@@ -255,7 +284,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget get _getAnimatedSelectedBar => AnimatedContainer(
         alignment: tabAlign,
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: _duration),
         curve: Curves.easeInOut,
         color: Colors.transparent,
         height: 1,
@@ -263,4 +292,37 @@ class _ProfilePageState extends State<ProfilePage> {
         child:
             Container(height: 1, width: size.width / 2, color: Colors.black87),
       );
+
+  SliverToBoxAdapter _getImageGrid(BuildContext context) => SliverToBoxAdapter(
+        child: Stack(
+          children: <Widget>[
+            AnimatedContainer(
+              transform: Matrix4.translationValues(_gridMargin, 0, 0),
+              duration: Duration(milliseconds: _duration),
+              curve: Curves.easeInOut,
+              child: _imageGrid,
+            ),
+            AnimatedContainer(
+              transform: Matrix4.translationValues(_myImgGridMargin, 0, 0),
+              duration: Duration(milliseconds: _duration),
+              curve: Curves.easeInOut,
+              child: _imageGrid,
+            ),
+          ],
+        ),
+      );
+
+  GridView get _imageGrid => GridView.count(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        crossAxisCount: 3,
+        childAspectRatio: 1,
+        children: List.generate(
+          14,
+          (index) => _gridImgItem(index),
+        ),
+      );
+
+  CachedNetworkImage _gridImgItem(int index) => CachedNetworkImage(
+      fit: BoxFit.cover, imageUrl: "https://picsum.photos/id/$index/100/100");
 }
