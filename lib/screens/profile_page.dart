@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
 import 'package:flutter_app/utils/profile_img_path.dart';
+import 'package:flutter_app/widgets/profile_side_menu.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -50,20 +51,14 @@ class _ProfilePageState extends State<ProfilePage>
     return AnimatedContainer(
       width: _menuWidth,
       curve: Curves.easeInOut,
-      color: Colors.grey[200],
+      color: Colors.grey[100],
       duration: Duration(milliseconds: 300),
       transform: Matrix4.translationValues(
           _menuOpened ? size.width - _menuWidth : size.width, 0, 0),
       child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            FlatButton(
-              child: Text('Xeon3113'),
-              onPressed: null,
-            )
-          ],
+        child: SizedBox(
+          width: _menuWidth,
+          child: ProfileSideMenu(),
         ),
       ),
     );
