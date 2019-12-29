@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
+import 'package:flutter_app/screens/camera_page.dart';
 import 'package:flutter_app/screens/feed_page.dart';
 import 'package:flutter_app/screens/profile_page.dart';
 import 'package:flutter_app/screens/search_page.dart';
@@ -15,9 +16,7 @@ class _MainPageState extends State<MainPage> {
   static List<Widget> _widgetOptions = <Widget>[
     FeedPage(),
     SearchPage(),
-    Container(
-      color: Colors.primaries[1],
-    ),
+    Container(),
     Container(
       color: Colors.primaries[2],
     ),
@@ -73,8 +72,19 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 2) {
+      openCamera(context);
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
+  openCamera(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CameraPage()),
+    );
   }
 }
