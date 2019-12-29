@@ -142,7 +142,7 @@ class FeedPage extends StatelessWidget {
           child: CircleAvatar(
             backgroundImage:
             CachedNetworkImageProvider(getProfileImgPath(username)),
-            radius: common_radius,
+            radius: profile_radius,
           ),
         ),
         Expanded(child: Text(username)),

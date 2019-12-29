@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
 import 'package:flutter_app/screens/feed_page.dart';
 import 'package:flutter_app/screens/profile_page.dart';
+import 'package:flutter_app/screens/search_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -13,9 +14,7 @@ class _MainPageState extends State<MainPage> {
 
   static List<Widget> _widgetOptions = <Widget>[
     FeedPage(),
-    Container(
-      color: Colors.primaries[0],
-    ),
+    SearchPage(),
     Container(
       color: Colors.primaries[1],
     ),

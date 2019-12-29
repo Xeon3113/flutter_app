@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
-import 'package:flutter_app/utils/insta_util.dart';
 import 'package:flutter_app/utils/profile_img_path.dart';
 
 class Comment extends StatelessWidget {
@@ -28,7 +27,7 @@ class Comment extends StatelessWidget {
             backgroundImage: NetworkImage(
               getProfileImgPath(username),
             ),
-            radius: common_radius,
+            radius: profile_radius,
           ),
         ),
         Visibility(
