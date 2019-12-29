@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/main_page.dart';
+import 'package:flutter_app/screens/signin_page.dart';
 
 import 'constants/material_color.dart';
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MainPage(),
+      home: SignInPage(),
       theme: ThemeData(primarySwatch: white),
     );
   }
