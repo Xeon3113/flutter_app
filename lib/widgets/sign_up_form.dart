@@ -139,7 +139,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   icon: ImageIcon(
                     AssetImage("assets/icon/facebook.png"),
                   ),
-                  label: Text("Log in with Facebook"),
+                  label: Text("Sign in with Facebook"),
                 ),
               ),
             ],
