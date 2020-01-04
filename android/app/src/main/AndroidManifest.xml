@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kr.co.coreweb.flutter_app">
+    package="kr.co.coreweb.instagram_clone">
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -8,8 +8,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="flutter_app"
-        android:icon="@mipmap/ic_launcher">
+        android:label="instagram_clone"
+        android:icon="@mipmap/ic_ironman">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

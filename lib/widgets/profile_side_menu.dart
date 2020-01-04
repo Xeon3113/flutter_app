@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
+import 'package:flutter_app/screens/auth_page.dart';
 
 class ProfileSideMenu extends StatelessWidget {
   @override
@@ -23,7 +24,11 @@ class ProfileSideMenu extends StatelessWidget {
                 height: 1,
               ),
               FlatButton.icon(
-                onPressed: null,
+                onPressed: (){
+                  final route = MaterialPageRoute(builder: (context)=>AuthPage());
+                  // push를 이용하면 스택 뒤로 밀려가 back button 누를시 다시 돌아오게 된다.
+                  Navigator.pushReplacement(context, route);
+                },
                 icon: Icon(Icons.exit_to_app),
                 label: Text('Log out',
                     style: TextStyle(

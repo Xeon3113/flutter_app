@@ -4,21 +4,23 @@ import 'package:flutter_app/constants/size.dart';
 import 'package:flutter_app/main_page.dart';
 import 'package:flutter_app/utils/simple_snackbar.dart';
 
-class SignInForm extends StatefulWidget {
+class SignUpForm extends StatefulWidget {
   @override
-  _SignInFormState createState() => _SignInFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _pwController = TextEditingController();
+  TextEditingController _cpwController = TextEditingController();
 
   // TextEditingController 사용하게 되면 반드시 dispose @override 해줘야 한다.
   @override
   void dispose() {
     _emailController.dispose();
     _pwController.dispose();
+    _cpwController.dispose();
     super.dispose();
   }
 
@@ -27,7 +29,7 @@ class _SignInFormState extends State<SignInForm> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 70, right: common_gap, bottom: common_gap, left: common_gap),
+        padding: const EdgeInsets.only(top: 30, right: common_gap, bottom: common_gap, left: common_gap),
         child: Form(
           key: _formKey,
           child: Column(
@@ -57,21 +59,26 @@ class _SignInFormState extends State<SignInForm> {
                     decoration: getTextFieldDecor("Password"),
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return 'Please enter your password';
+                        return 'Please enter password';
                       }
                       return null;
                     }),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: common_s_gap),
-                child: Text(
-                  'Forgot password?',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    color: Colors.blue[700],
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                child: TextFormField(
+                    obscureText: true,
+                    controller: _cpwController,
+                    decoration: getTextFieldDecor("Confirm Password"),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Please confirm password';
+                      }
+                      else if (value != _pwController.text) {
+                        return 'Password does not match';
+                      }
+                      return null;
+                    }),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: common_s_gap),
@@ -84,7 +91,7 @@ class _SignInFormState extends State<SignInForm> {
                     }
                   },
                   child: Text(
-                    "Log in",
+                    "Join",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -132,7 +139,7 @@ class _SignInFormState extends State<SignInForm> {
                   icon: ImageIcon(
                     AssetImage("assets/icon/facebook.png"),
                   ),
-                  label: Text("Sign in with Facebook"),
+                  label: Text("Log in with Facebook"),
                 ),
               ),
             ],

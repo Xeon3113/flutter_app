@@ -1,4 +1,4 @@
-package kr.co.coreweb.flutter_app
+package kr.co.coreweb.instagram_clone
 
 import android.os.Bundle
 

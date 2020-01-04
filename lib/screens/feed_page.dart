@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/size.dart';
+import 'package:flutter_app/utils/custom_indicator.dart';
 import 'package:flutter_app/utils/insta_util.dart';
 import 'package:flutter_app/utils/profile_img_path.dart';
 import 'package:flutter_app/widgets/comment.dart';
@@ -161,17 +162,7 @@ class FeedPage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: 'https://picsum.photos/id/$index/400/400',
       placeholder: (context, url) {
-        return Container(
-          width: size.width,
-          height: size.width,
-          child: Center(
-            child: SizedBox(
-              width: 30,
-              height: 30,
-              child: Image.asset('assets/loading_img.gif'),
-            ),
-          ),
-        );
+        return new CustomIndicator(progressSize: size.width,);
       },
       imageBuilder: (BuildContext context, ImageProvider imageProvider) =>
           AspectRatio(
@@ -188,3 +179,4 @@ class FeedPage extends StatelessWidget {
     );
   }
 }
+
